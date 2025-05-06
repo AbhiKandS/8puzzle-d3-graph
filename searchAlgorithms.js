@@ -4,6 +4,7 @@ import {PuzzleState, FINAL} from "./puzzle_state.js";
 //TODO: implement isSolvable
 
 export function Astar(puzzleState) {
+    const start = performance.now('Astar');
     const visited = new Set();
     const pq = new MinHeap();
 
@@ -14,9 +15,11 @@ export function Astar(puzzleState) {
     while (!pq.isEmpty()) {
         currState = pq.pop().state;
         if (currState.h_cost == 0) {
-            console.log('done');
-
-            currState.solved();
+            const end = performance.now('Astar');
+            const time = (end-start).toFixed(2);
+            console.log(time);
+            
+            currState.solved(visited.size, time);
             return currState.id.replace('root','')
         }
 
@@ -32,6 +35,7 @@ export function Astar(puzzleState) {
 }
 
 export function bfs(puzzleState) {
+    const start = performance.now('bfs');
     const visited = new Set();
     const queue = [];
 
@@ -43,9 +47,9 @@ export function bfs(puzzleState) {
         currState = queue.shift();
         
         if (currState.isGoalState()) {
-            console.log('done');
-
-            currState.solved();
+            const end = performance.now('bfs');
+            const time = (end-start).toFixed(2);
+            currState.solved(visited.size, time);
             return currState.id.replace('root', '')
         }
 
@@ -60,12 +64,17 @@ export function bfs(puzzleState) {
     puzzleState.unsolved();
 }
 
-export function dfs(puzzleState=new PuzzleState(FINAL), visited=new Set()) {
+export function dfs(puzzleState=new PuzzleState(FINAL), visited=new Set(), start=performance.now('dfs')) {
     if (visited.has(puzzleState.name)) 
         return false;
 
-    if (puzzleState.isGoalState())
+    if (puzzleState.isGoalState()) {
+        const end = performance.now('dfs')
+        const time = (end-start).toFixed(2);
+        puzzleState.solved(visited.size, time);
         return puzzleState.id.replace('root', '');
+    }
+
 
     visited.add(puzzleState.name);
     let res;
@@ -73,7 +82,7 @@ export function dfs(puzzleState=new PuzzleState(FINAL), visited=new Set()) {
     for (const child of puzzleState.children) {
         console.log(child.id);
         
-        res = dfs(child, visited);
+        res = dfs(child, visited, start);
         if (res) return res;
     }
     return false;

@@ -140,13 +140,25 @@ export class PuzzleState {
         renderTree(this, pathToSolution);
     }
 
-    solved() {
-        let moves = this.id.replace("root", "");
+    solved(numNodes, time) {
+        const solveStateElement = document.querySelector("#solved-state");
+        
+        const moves = this.id.replace("root", "");
+        if (solveStateElement)
+            solveStateElement.innerHTML = `
+                SOLVED!!<br>
+                Moves: ${moves}<br>
+                Moves Length (Depth approx.): ${moves.length} <br>
+                Time: ${time}ms <br>
+        `;
         this.name += "\nDONE!! " + "MOVES: " + moves;
         return this
     }
 
     unsolved() {
+        const solveStateElement = document.querySelector("#solved-state");
+        if (solveStateElement)
+            solveStateElement.innerHTML = `UNSOLVABLE`;
         this.name += "\n_\n";
         this.name += "UNSOLVABLE";
         this.children = [];
