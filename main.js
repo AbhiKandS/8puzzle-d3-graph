@@ -8,21 +8,6 @@ let newstate = new PuzzleState(
     ['7', '5', '8']]
 )
 
-// window.newstate = newstate;
-// window.renderTree = renderTree;
-
-// let otherstate = new PuzzleState(FINAL)
-
-// let another  = new PuzzleState(
-//     [['1', '2', '3', '4'],
-//     ['5', '6', '7', '8'],
-//     ['9', '10', '11', '12'],
-//     ['13', '14', '15', BLANK]]
-// )
-
-//TODO: print unsolved
-//TODO: make drop down to select search algo
-//TODO: display time
 const solveStateElement = document.querySelector("#solved-state");
 
 const dropdown = document.querySelector("#myDropdown")
@@ -39,11 +24,15 @@ dropdown.addEventListener("change", (event) => {
     newstate.children = [];
     console.log(event.target.value);
     const path = searchAlgo(newstate);
-    renderTree(newstate, path);
+
+    if (event.target.value == "dfs")
+        renderTree(newstate, path, true);
+    else
+        renderTree(newstate, path);
 })
 
 
 if (solveStateElement)
     solveStateElement.innerHTML = `Solving...`;
-const path = Astar(newstate);
+const path = bfs(newstate);
 renderTree(newstate, path)

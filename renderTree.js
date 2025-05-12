@@ -11,7 +11,7 @@ function getHighlightIDs(data, pathToSolution) {
     return highlightedIDs
 }
 
-export default function renderTree(data, pathToSolution='') {
+export default function renderTree(data, pathToSolution='', isDfs=false) {
     const container = d3.select("#tree-container");
     const svg = container.select("#tree");
     const root = d3.hierarchy(data);
@@ -21,7 +21,7 @@ export default function renderTree(data, pathToSolution='') {
 
     const maxDepth = root.height + 1;
     const numNodes = root.descendants().length;
-    const nodeWidth = 150;
+    const nodeWidth = (isDfs) ? 35 : 100;
     const nodeHeight = 150;
     const hSpacing = nodeWidth * 1.5;
     const vSpacing = nodeHeight * 2;
@@ -41,9 +41,9 @@ export default function renderTree(data, pathToSolution='') {
     const link = svg.selectAll('line')
         .data(root.links())
         .join('line')
-        .attr('x1', d => d.source.x + nodeWidth / 3)
+        .attr('x1', d => d.source.x + nodeWidth / 1.20)
         .attr('y1', d => d.source.y + nodeHeight / 3)
-        .attr('x2', d => d.target.x + nodeWidth / 3)
+        .attr('x2', d => d.target.x + nodeWidth / 1.20)
         .attr('y2', d => d.target.y + nodeHeight / 3)
         .attr('stroke', d => {
             return (highlightedIDs.has(d.target.data.id)) ? 'red' : '#555';
