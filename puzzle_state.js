@@ -8,7 +8,7 @@ export const FINAL = [
     ['7', '8', BLANK]
 ];
 
-const MOVES = { 
+export const MOVES = { 
     'U': [-1, 0],
     'D': [1, 0],
     'L': [0, -1],
@@ -32,6 +32,10 @@ export class PuzzleState {
         this.name = this.name();
         this.htmlName = this.htmlName();
         this.id = id;
+
+        // MCTS specific statistics
+        this.visitCount = 0; // Number of times this node has been visited in MCTS simulations
+        this.winScore = 0; 
 
         this.children = [];
     }

@@ -1,6 +1,8 @@
 import { Astar, bfs , dfs} from "./searchAlgorithms.js";
+import { MCTS } from "./mcts.js";
 import { FINAL, BLANK, PuzzleState } from "./puzzle_state.js";
 import renderTree from "./renderTree.js";
+import { fillTable } from "./fillTable.js";
 
 let newstate = new PuzzleState(
     [['1', '2', '3'],
@@ -17,7 +19,8 @@ dropdown.addEventListener("change", (event) => {
     const algoMap = {
         "Astar": Astar,
         "bfs": bfs,
-        "dfs": dfs
+        "dfs": dfs,
+        "MCST" : MCTS
     };
     const searchAlgo = algoMap[event.target.value]
 
@@ -34,5 +37,7 @@ dropdown.addEventListener("change", (event) => {
 
 if (solveStateElement)
     solveStateElement.innerHTML = `Solving...`;
-const path = bfs(newstate);
+const path = Astar(newstate)[0];
 renderTree(newstate, path)
+
+fillTable(newstate);

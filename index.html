@@ -110,6 +110,53 @@
             /* Make dropdown arrow visible for IE */
         }
 
+
+        /* Styles for cells within the table with id="table" */
+        #table td {
+            /* Approximately 10 times larger, plus 10% increase */
+            width: 150px;
+            height: 100px;
+            /* Adjust height for potentially more content */
+            border: 6px solid #64b5f6;
+            /* Material Blue 300 border for cells */
+            background-color: #34495e;
+            /* Slightly lighter dark background for cells */
+            text-align: center;
+            vertical-align: middle;
+            /* Increased font size by 10% */
+            font-size: 26.4px;
+            font-weight: bold;
+            color: #ecf0f1;
+            /* Light text color */
+            border-radius: 15px;
+            /* Rounded corners for cells */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            /* Smooth transition */
+            cursor: pointer;
+            /* Indicate interactivity if applicable */
+        }
+
+        /* Style for the table header cells */
+        #table thead td {
+            background-color: #42a5f5;
+            /* Material Blue 400 background for header */
+            color: #ffffff;
+            /* White text for header */
+            /* Increased font size by 10% */
+            font-size: 30.8px;
+            font-weight: bold;
+            border-bottom: 6px solid #2196f3;
+            /* Material Blue 500 bottom border */
+            border-top: none;
+            /* Remove top border for header cells */
+        }
+
+        /* Hover effect for cells */
+        #table td:hover {
+            background-color: #416988;
+            /* Darker on hover */
+            transform: scale(1.02);
+            /* Slightly enlarge on hover */
         }
     </style>
 
@@ -117,9 +164,9 @@
 
 <body>
     <!-- <div id="tree-container" class="scroll-wrapper">
-            <ul id="root">
-            </ul>
-        </div> -->
+                <ul id="root">
+                </ul>
+            </div> -->
 
 
     <div class="scroll-wrapper">
@@ -132,11 +179,23 @@
 
     <select id="myDropdown">
         <option value="Astar" selected>Astar</option>
+        <option value="MCST" selected>Monte-Carlo TS</option>
         <option value="bfs">bfs</option>
         <option value="dfs">dfs</option>
     </select>
 
-    <div id="solved-state"></div>
+    <!-- <div id="solved-state"></div> -->
+    <table id="table">
+        <thead>
+            <td></td>
+            <td>Time</td>
+            <td>Nodes</td>
+            <td>Depth</td>
+            <td>Moves</td>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
 
     <script type="module" src="./main.js"></script>
 </body>

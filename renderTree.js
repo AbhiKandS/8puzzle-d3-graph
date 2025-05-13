@@ -21,6 +21,8 @@ export default function renderTree(data, pathToSolution='', isDfs=false) {
 
     const maxDepth = root.height + 1;
     const numNodes = root.descendants().length;
+    console.log('depth: ', maxDepth, ' numNodes: ', numNodes);
+    
     const nodeWidth = (isDfs) ? 35 : 100;
     const nodeHeight = 150;
     const hSpacing = nodeWidth * 1.5;

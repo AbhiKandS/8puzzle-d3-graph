@@ -20,7 +20,7 @@ export function Astar(puzzleState) {
             console.log(time);
             
             currState.solved(visited.size, time);
-            return currState.id.replace('root','')
+            return [currState.id.replace('root',''), time];
         }
 
         visited.add(currState.name);
@@ -50,7 +50,7 @@ export function bfs(puzzleState) {
             const end = performance.now('bfs');
             const time = (end-start).toFixed(2);
             currState.solved(visited.size, time);
-            return currState.id.replace('root', '')
+            return [currState.id.replace('root', ''), time]
         }
 
         currState.expandChildren();
@@ -66,13 +66,13 @@ export function bfs(puzzleState) {
 
 export function dfs(puzzleState=new PuzzleState(FINAL), visited=new Set(), start=performance.now('dfs')) {
     if (visited.has(puzzleState.name)) 
-        return false;
+        return [false, 0];
 
     if (puzzleState.isGoalState()) {
         const end = performance.now('dfs')
         const time = (end-start).toFixed(2);
         puzzleState.solved(visited.size, time);
-        return puzzleState.id.replace('root', '');
+        return [puzzleState.id.replace('root', ''), time];
     }
 
 
@@ -80,10 +80,8 @@ export function dfs(puzzleState=new PuzzleState(FINAL), visited=new Set(), start
     let res;
     puzzleState.expandChildren();
     for (const child of puzzleState.children) {
-        console.log(child.id);
-        
         res = dfs(child, visited, start);
-        if (res) return res;
+        if (res[0]) return res;
     }
-    return false;
+    return [false,0];
 }
